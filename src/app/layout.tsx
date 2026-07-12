@@ -5,7 +5,7 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Providers } from "../providers";
 
 const roboto = Roboto({
-  variable: "--font-geist-sans",
+  variable: "--font-roboto",
   subsets: ["latin"],
 });
 

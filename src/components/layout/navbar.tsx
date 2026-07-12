@@ -7,7 +7,7 @@ import Payments from "@mui/icons-material/Payments";
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { ThemeToggle2 } from "../shared/theme-toggle";
+import { ThemeToggle } from "../shared/theme-toggle";
 
 const navItems = [
     { label: "Nueva Venta", href: "/sale", icon: BottleWine },
@@ -32,7 +32,7 @@ export function Navbar() {
                 </div>
                 <div className="lg:w-1/5 flex items-center justify-between ">
                     <span className="lg:text-lg font-medium mr-4 lg:m-0">{formattedDate}</span>
-                    <ThemeToggle2 />
+                    <ThemeToggle />
                 </div>
             </div>
         </header>
