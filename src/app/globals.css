@@ -48,9 +48,10 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  --lightMode: var(--lightMode);
-  --brown: var(--brown);
-  --backgroundSelect: var(--backgroundSelect);
+  --color-lightMode: var(--lightMode);
+  --color-brown: var(--brown);
+  --color-backgroundSelect: var(--backgroundSelect);
+  --color-background-2: var(--background-2);
 
   --color-purple: var(--purple);
   --color-pink: var(--pink);
@@ -63,7 +64,7 @@
 }
 
 :root {
-  --background: #f5efe5;
+  --background: #fff8ee;
   --surface: #242222;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -114,6 +115,7 @@
   --chip: #1f3037;
   --chip-foreground: #d8d8d8a6;
   --badgeDefault: #f3c139;
+  --background-2: oklch(99.005% 0.00671 67.371);
 }
 
 .dark {
@@ -152,7 +154,7 @@
 
   --brown: #ecb37a;
   --backgroundSelect: #5e5e5e;
-
+  --background-2: oklch(22.756% 0.00154 16.344);
 }
 
 @layer base {

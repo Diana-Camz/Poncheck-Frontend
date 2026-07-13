@@ -20,7 +20,7 @@ export function Sidebar() {
     const pathname = usePathname();
 
     return (
-        <aside className="sticky top-16 hidden h-[calc(100svh-4rem)] w-20 shrink-0 border-r border-border p-3 md:block lg:w-50 xl:64 lg:p-4">
+        <aside className="sticky top-16 hidden h-[calc(100svh-4rem)] w-20 shrink-0 border-r border-border bg-background-2 p-3 md:block lg:w-50 xl:64 lg:p-4">
             <nav className="flex flex-col gap-1" aria-label="Sidebar navigation">
                 {navItems.map((item) => {
                     const Icon = item.icon;
