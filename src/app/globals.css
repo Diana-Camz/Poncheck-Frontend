@@ -52,6 +52,8 @@
   --color-brown: var(--brown);
   --color-backgroundSelect: var(--backgroundSelect);
   --color-background-2: var(--background-2);
+  --color-chip-selected-background: var(--chip-selected-background);
+  --color-chip-selected-text: var(--chip-selected-text);
 
   --color-purple: var(--purple);
   --color-pink: var(--pink);
@@ -113,13 +115,15 @@
   --red: #f57a93;
 
   --chip: #1f3037;
-  --chip-foreground: #d8d8d8a6;
+  --chip-foreground: oklch(91.761% 0.00416 55.557 / 0.63);
+  --chip-selected-background: rgba(170, 98, 16, 0.788);
+  --chip-selected-text: rgba(170, 98, 16, 0.788);
   --badgeDefault: #f3c139;
   --background-2: oklch(99.005% 0.00671 67.371);
 }
 
 .dark {
-  --background: rgb(71, 71, 71);
+  --background: #121212;
   --foreground: #f7eede;
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -153,6 +157,9 @@
   --sidebar-ring: oklch(0.556 0 0);
 
   --brown: #ecb37a;
+  --chip-selected-background: #ecb37a;
+  --chip-selected-text: #ecb37a;
+  --chip-foreground: oklch(22.756% 0.00154 16.344);
   --backgroundSelect: #5e5e5e;
   --background-2: oklch(22.756% 0.00154 16.344);
 }

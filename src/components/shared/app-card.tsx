@@ -13,7 +13,7 @@ type PressEvent = MouseEvent<HTMLElement> | TouchEvent<HTMLElement>;
 type AppCardProps = {
     className?: string;
     imageUrl?: string;
-    title?: string;
+    name?: string;
     onClick?: (e: PressEvent) => void;
 };
 
@@ -21,10 +21,10 @@ type AppCardProps = {
 export default function AppCard({
     className,
     imageUrl = "",
-    title = "",
+    name = "",
     onClick,
 }: AppCardProps) {
-    const isLongTitle = (title?.length ?? 0) > 10;
+    const isLongname = (name?.length ?? 0) > 15;
 
 
     return (
@@ -35,7 +35,7 @@ export default function AppCard({
             <CardContent className="relative w-full aspect-square overflow-hidden shrink-0 rounded-t-lg min-[1580px]:rounded-md cursor-pointer">
                 <Image
                     src={imageUrl}
-                    alt={title}
+                    alt={name}
                     fill
                     sizes="(max-width: 640px) 50vw, (max-width: 1280px) 100vw, 240px"
                     className="object-cover "
@@ -44,12 +44,11 @@ export default function AppCard({
             <CardFooter className="flex h-12 min-h-12 items-center gap-0 py-2 my-1 rounded-b-md cursor-pointer leading-tight bg-brown/20">
                 <p
                     className={cn(
-                        "w-full min-w-0 overflow-hidden text-foreground wrap-break-word text-lg text-center text-ellipsis [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]",
-                        isLongTitle && "text-sm"
+                        "w-full min-w-0 overflow-hidden text-foreground wrap-break-word text-sm text-center text-ellipsis [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]",
+                        isLongname && "text-[.820rem]"
                     )}
-                    title={title}
                 >
-                    {title}
+                    {name}
                 </p>
             </CardFooter>
         </Card>
