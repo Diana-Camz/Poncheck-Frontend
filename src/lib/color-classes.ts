@@ -25,7 +25,7 @@ export const colorVariants = {
   thirdary: "var(--yellow)",
   red: "var(--red)",
   bgDefault: "var(--chip-foreground)",
-  txdefault: "var(--chip)",
+  txDefault: "var(--chip-selected-text)",
   badgeDefault: "var(--badgeDefault)",
 } as const;
 

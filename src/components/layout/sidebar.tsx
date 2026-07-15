@@ -33,7 +33,7 @@ export function Sidebar() {
                             aria-current={isActive ? "page" : undefined}
                             className={cn(
                                 "flex min-h-11 items-center justify-center gap-3 rounded-lg px-3 py-2.5 my-0.5 text-sm font-medium text-muted-foreground transition hover:bg-chart-6 hover:text-foreground lg:justify-start",
-                                isActive && "bg-secondary/90 text-primary-foreground hover:bg-secondary/80 hover:text-primary-foreground"
+                                isActive && "bg-brown/90 text-primary-foreground hover:bg-brown/80 hover:text-primary-foreground"
                             )}
                         >
                             <Icon className="size-5" />
