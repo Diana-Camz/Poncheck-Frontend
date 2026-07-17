@@ -4,7 +4,7 @@ import {
     CardContent,
     CardFooter,
 } from "@/components/ui/card"
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/styles/utils";
 import Image from "next/image";
 import { type MouseEvent, type TouchEvent } from "react";
 

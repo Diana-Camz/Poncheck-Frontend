@@ -8,7 +8,6 @@ import { LoadingState } from "@/components/shared/loading-state";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { useState } from "react";
 import FormatListBulletedAddIcon from '@mui/icons-material/FormatListBulletedAdd';
-import AppCard from '@/components/shared/app-card';
 
 export default function Home() {
     const [size, setSize] = useState("");
@@ -63,12 +62,6 @@ export default function Home() {
             </div>
             <div>
                 <LoadingState message="Cargando..." description="Por favor, espere mientras se carga la información." />
-            </div>
-            <div>
-                <AppCard
-                    imageUrl={"/images/products/coffee.png"}
-                    title="Cafe"
-                />
             </div>
         </div>
     );

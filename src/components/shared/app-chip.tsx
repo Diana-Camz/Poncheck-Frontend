@@ -1,6 +1,6 @@
 import Chip from "@mui/material/Chip";
 import { ReactElement } from "react";
-import { colorVariants, type ColorVariant } from "@/lib/color-classes";
+import { colorVariants, type ColorVariant } from "@/utils/styles/color-classes";
 
 type ChipProps = {
     label: string;

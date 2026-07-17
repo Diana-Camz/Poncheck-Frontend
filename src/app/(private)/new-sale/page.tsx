@@ -1,13 +1,14 @@
 "use client";
+
 import { CartItem } from "@/features/sales/types/sales.types";
-import { ProductItem } from '@/features/sales/types/products.types';
-import CartSummary from "./components/cart-summary";
-import Products from "./components/products";
+import { ProductItem } from '@/features/products/types/products.types';
+import CartSummary from "../../../features/sales/components/cart-summary";
+import Products from "../../../features/sales/components/products";
 import { useState } from "react";
 import { toast } from "sonner";
 
 
-export default function Sale() {
+export default function NewSale() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [notes, setNotes] = useState("");
   const [productsResetKey, setProductsResetKey] = useState(0);

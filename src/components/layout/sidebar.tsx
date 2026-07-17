@@ -6,14 +6,15 @@ import { BottleWine, ShieldCogCorner } from "lucide-react";
 import ListAlt from "@mui/icons-material/ListAlt";
 import Payments from "@mui/icons-material/Payments";
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/styles/utils";
 
 const navItems = [
-    { label: "Nueva Venta", href: "/sale", icon: BottleWine },
+    { label: "Nueva Venta", href: "/new-sale", icon: BottleWine },
     { label: "Ventas", href: "/sales", icon: ListAlt },
-    { label: "Caja", href: "/cash_register", icon: PointOfSaleIcon },
-    { label: "Movimientos", href: "/transactions", icon: Payments },
-    { label: "Admin", href: "/admin", icon: ShieldCogCorner },
+    { label: "Caja", href: "/cash-register", icon: PointOfSaleIcon },
+    // { label: "Movimientos", href: "/transactions", icon: Payments },
+    { label: "Inventario", href: "/inventory", icon: Payments },
+    // { label: "Admin", href: "/admin", icon: ShieldCogCorner },
 ];
 
 export function Sidebar() {

@@ -1,7 +1,7 @@
 import { Loader2 } from "lucide-react";
 import { useId, type ComponentPropsWithoutRef, type ReactNode } from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/styles/utils";
 
 type LoadingStateSize = "sm" | "md" | "lg";
 

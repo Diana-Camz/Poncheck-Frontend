@@ -5,9 +5,9 @@ import { BottleWine, Milk, Wine, Coffee, Popcorn, Shirt } from 'lucide-react';
 import WaterDropOutlinedIcon from '@mui/icons-material/WaterDropOutlined';
 import AppChip from '@/components/shared/app-chip';
 import { products } from '@/mocks/products'
-import AppCard from '@/components/shared/app-card';
+import AppCard from '@/features/products/components/app-card';
 import { CartItem } from '@/features/sales/types/sales.types';
-import { ProductItem } from '@/features/sales/types/products.types';
+import { ProductItem } from '@/features/products/types/products.types';
 import { categories } from '@/mocks/categories';
 
 type ProductsProps = {
@@ -105,7 +105,7 @@ export default function Products({
                 </CardContent >
             </Card>
             <Card className='h-full'>
-                <CardContent className="min-h-0 flex-1 flex flex-wrap gap-2 gap-7 pt-1.5 pb-3 justify-start items-start overflow-y-auto scrollbar-thin content-start">
+                <CardContent className="min-h-0 flex-1 flex flex-wrap gap-7 pt-1.5 pb-3 justify-start items-start overflow-y-auto scrollbar-thin content-start">
                     {filteredProducts.map((item) => {
                         const isInCart = cart.some((cartItem) => cartItem.id === item.id);
                         return (

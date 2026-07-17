@@ -2,7 +2,7 @@
 
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProvider } from '@mui/material/styles';
-import { theme } from '@/theme'
+import { theme } from '@/utils/styles/theme'
 import { Toaster } from "sonner";
 
 export function Providers({
