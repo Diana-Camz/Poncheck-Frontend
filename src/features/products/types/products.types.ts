@@ -9,7 +9,7 @@ export type ProductItem = {
     active: boolean;
     poncheBase: "WINE" | "MILK" | "WATER" | null;
     productSize: "SMALL" | "MEDIUM" | "LARGE" | null;
-    categoryId: string;
+    category: string;
 }
 
 export type Category = {
