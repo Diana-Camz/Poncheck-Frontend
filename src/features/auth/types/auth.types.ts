@@ -1,3 +1,7 @@
+export type AuthState = {
+    user: LoginResponse | null,
+    setUser: (user: LoginResponse | null) => void;
+}
 
 export type LoginResponse = {
     id: string,
