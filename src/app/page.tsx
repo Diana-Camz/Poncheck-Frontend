@@ -3,20 +3,36 @@ import { useEffect } from 'react'
 
 import { useAuthStore } from "@/features/auth/api/auth.api";
 import { useRouter } from "next/navigation";
+import { getCurrentUser } from '@/features/users/api/users.api';
 
 export default function Home() {
     const router = useRouter();
-    const { user } = useAuthStore();
-    const token = user?.jwtToken;
-    console.log(token)
+    // const { user } = useAuthStore();
+    // const token = user?.jwtToken;
+    //console.log(token)
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+
         if (!token) {
-             router.replace('/signin')
-        } else {
-             router.replace('/new-sale')
+            router.replace("/signin");
+            return;
         }
-    }, [token, router]);
+
+        if (token) {
+            getCurrentUser()
+                .then(user => {
+                    useAuthStore.getState().setUser(user)
+                    router.replace('/new-sale')
+                })
+                .catch(error => {
+                    localStorage.removeItem("token");
+                    useAuthStore.getState().setUser(null)
+                    console.log(error)
+                    router.replace('/signin')
+                })
+        }
+    }, [router]);
 
     return null;
 }
