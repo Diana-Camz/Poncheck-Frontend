@@ -1,7 +1,7 @@
 import { Loader2 } from "lucide-react";
 import { useId, type ComponentPropsWithoutRef, type ReactNode } from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/styles/utils";
 
 type LoadingStateSize = "sm" | "md" | "lg";
 
@@ -61,7 +61,7 @@ export function LoadingState({
       aria-labelledby={messageId}
       aria-live="polite"
       className={cn(
-        "flex w-full flex-col items-center justify-center px-4 text-center",
+        "flex w-full flex-col items-center justify-center px-4 text-center bg-background",
         fullPage ? "min-h-svh" : "min-h-40",
         classes.container,
         className
