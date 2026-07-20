@@ -61,7 +61,7 @@ export function LoadingState({
       aria-labelledby={messageId}
       aria-live="polite"
       className={cn(
-        "flex w-full flex-col items-center justify-center px-4 text-center",
+        "flex w-full flex-col items-center justify-center px-4 text-center bg-background",
         fullPage ? "min-h-svh" : "min-h-40",
         classes.container,
         className
