@@ -7,18 +7,21 @@ import ListAlt from "@mui/icons-material/ListAlt";
 import Payments from "@mui/icons-material/Payments";
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import { cn } from "@/utils/styles/utils";
+import { AppButton } from "../shared/app-button";
+import { useLogout } from "@/features/auth/hooks/useAuth";
 
 const navItems = [
     { label: "Nueva Venta", href: "/new-sale", icon: BottleWine },
     { label: "Ventas", href: "/sales", icon: ListAlt },
     { label: "Caja", href: "/cash-register", icon: PointOfSaleIcon },
-    // { label: "Movimientos", href: "/transactions", icon: Payments },
+    { label: "Movimientos", href: "/", icon: Payments },
     { label: "Inventario", href: "/inventory", icon: Payments },
     // { label: "Admin", href: "/admin", icon: ShieldCogCorner },
 ];
 
 export function Sidebar() {
     const pathname = usePathname();
+    const logout = useLogout();
 
     return (
         <aside className="sticky top-16 hidden h-[calc(100svh-4rem)] w-20 shrink-0 border-r border-border bg-background-2 p-3 md:block lg:w-50 xl:64 lg:p-4">
@@ -42,6 +45,9 @@ export function Sidebar() {
                         </Link>
                     );
                 })}
+                <AppButton onClick={() => logout.mutate()}>
+                    Cerrar sesion
+                </AppButton>
             </nav>
         </aside>
     );

@@ -8,6 +8,10 @@ export async function login(loginData: Login): Promise<LoginResponse> {
     return data;
 }
 
+export async function logout() {
+    await axiosClient.post("/auth/logout");
+}
+
 export const useAuthStore = create<AuthState>(set => ({
     user: null,
     setUser: user => set({user})
