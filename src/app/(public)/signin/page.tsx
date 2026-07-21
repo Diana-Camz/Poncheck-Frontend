@@ -18,7 +18,7 @@ import { Header } from "./components/header";
 export default function Signin() {
     const [showPassword, setShowPassword] = useState(false);
     const login = useLogin();
-    const showLoader = login.isPending || login.isSuccess
+    const showLoader = login.isSuccess
 
     const {
         register,
@@ -35,9 +35,8 @@ export default function Signin() {
     async function onSubmit(data: Login) {
         try {
             await login.mutateAsync({ username: data.username, password: data.password });
-            toast.success("Sesion iniciada");
         } catch {
-            console.log(errors, login.error);
+            toast.error("Error al iniciar sesion, por favor intenta de nuevo.")
         }
     }
 
@@ -51,7 +50,7 @@ export default function Signin() {
                     />
                 </div>
             }
-            <Header/>
+            <Header />
             <div className="box-border flex min-h-svh w-full items-center justify-center px-4 py-8 pt-20 sm:px-6 md:px-10 md:pb-10">
                 <Card className="w-full max-w-5xl gap-0 overflow-hidden p-0 shadow-lg md:grid md:grid-cols-[minmax(0,1.15fr)_minmax(340px,0.85fr)]">
                     <div className="relative min-h-56 w-full bg-muted md:min-h-[520px]">
@@ -74,7 +73,7 @@ export default function Signin() {
                             </CardHeader>
                             <CardContent className="px-0">
                                 <form onSubmit={handleSubmit(onSubmit)}>
-                                    <FieldGroup>
+                                    <FieldGroup className="gap-1">
                                         <AppInput
                                             label="Usuario"
                                             errorMessage={errors.username?.message}
@@ -99,10 +98,13 @@ export default function Signin() {
                                             }
                                             {...register("password")}
                                         />
+                                    </FieldGroup>
+                                    <FieldGroup className="mt-7">
                                         <AppButton type="submit" variant="primary" size="lg" disabled={login.isPending} isLoading={login.isPending}>
                                             {"Iniciar Sesion"}
                                         </AppButton>
                                     </FieldGroup>
+
                                 </form>
                             </CardContent>
                         </div>
