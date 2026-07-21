@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { ThemeToggle } from "../shared/theme-toggle";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 
-export function Navbar() {
+export function Header() {
     const date = new Date();
     const formattedDate = format(date, 'PPPP', { locale: es });
     return (
-        <header className="top-0 z-40 hidden border-b border-border bg-background-2 backdrop-blur md:block">
+        <header className="fixed top-0 z-40 inset-x-0 hidden border-b border-border bg-background-2 backdrop-blur md:block">
             <div className="flex h-13 items-center justify-between gap-4 px-4 lg:px-6">
                 <div>
                     <Link href="/menu" className="flex items-center gap-2">

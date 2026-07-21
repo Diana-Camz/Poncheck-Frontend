@@ -1,33 +1,29 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import TimelapseIcon from '@mui/icons-material/Timelapse';
 import { AppButton } from "@/components/shared/app-button";
-import AppChip from "@/components/shared/app-chip";
 import { AppInput } from "@/components/shared/app-input";
-import AppSelect from "@/components/shared/app-select";
 import { LoadingState } from "@/components/shared/loading-state";
-import { ThemeToggle } from "@/components/shared/theme-toggle";
-import { useState } from "react";
-import FormatListBulletedAddIcon from '@mui/icons-material/FormatListBulletedAdd';
 import type { Login } from "@/features/auth/schema/auth.schema";
 import { loginSchema } from "@/features/auth/schema/auth.schema";
 import { useLogin } from "@/features/auth/hooks/useAuth";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { FieldGroup } from "@/components/ui/field";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
+import { Header } from "./components/header";
 
 export default function Signin() {
-    const router = useRouter();
-    const [size, setSize] = useState("");
-    const [amount, setAmount] = useState("");
-
+    const [showPassword, setShowPassword] = useState(false);
     const login = useLogin();
-    const showLoader = login.isPending || login.isSuccess
+    const showLoader = login.isSuccess
 
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm<Login>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -39,85 +35,81 @@ export default function Signin() {
     async function onSubmit(data: Login) {
         try {
             await login.mutateAsync({ username: data.username, password: data.password });
-            toast.success("Sesion iniciada");
         } catch {
-            console.log(errors, login.error);
+            toast.error("Error al iniciar sesion, por favor intenta de nuevo.")
         }
     }
 
     return (
         <>
             {showLoader &&
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-backgroung">
-                    <LoadingState 
-                    message="Iniciando Sesion..."
-                    fullPage={true}
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-background">
+                    <LoadingState
+                        message="Iniciando Sesion..."
+                        fullPage={true}
                     />
                 </div>
             }
-            <div>
-                <div className="flex gap-4">
-                    <ThemeToggle />
-                    <AppButton variant="primary" size="lg" onClick={() => console.log("Button clicked!")}>
-                        Primary
-                    </AppButton>
-                    <AppButton variant="secondary" onClick={() => console.log("Button clicked!")}>
-                        Secondary
-                    </AppButton>
-                    <AppButton variant="outline" onClick={() => console.log("Button clicked!")}>
-                        Outline
-                    </AppButton>
-                    <AppButton variant="ghost" onClick={() => console.log("Button clicked!")}>
-                        Ghost
-                    </AppButton>
-                    <AppButton variant="destructive" onClick={() => console.log("Button clicked!")}>
-                        Destructive
-                    </AppButton>
-                </div>
-                <div className="flex gap-4 w-1/2">
-                    <AppInput label="Direccion" placeholder="Ingrese la dirección" />
-                    <AppInput label="Telefono" placeholder="Ingrese el número de teléfono" />
-                    {/* <div>
-                    <AppBadge icon={<MailIcon />} variant="standard" badgeContent={5} />
-                </div> */}
+            <Header />
+            <div className="box-border flex min-h-svh w-full items-center justify-center px-4 py-8 pt-20 sm:px-6 md:px-10 md:pb-10">
+                <Card className="w-full max-w-5xl gap-0 overflow-hidden p-0 shadow-lg md:grid md:grid-cols-[minmax(0,1.15fr)_minmax(340px,0.85fr)]">
+                    <div className="relative min-h-56 w-full bg-muted md:min-h-[520px]">
+                        <Image
+                            src={"/images/banner.jpeg"}
+                            alt="banner"
+                            fill
+                            priority
+                            className="object-cover"
+                            sizes="(min-width: 768px) 58vw, 100vw"
+                        />
+                    </div>
+                    <div className="flex items-center justify-center px-5 py-8 sm:px-8 md:px-10 bg-background-2">
+                        <div className="flex flex-col w-full max-w-sm md:gap-7">
+                            <CardHeader className="items-center px-0 text-center">
+                                <CardTitle className="text-2xl font-semibold">Bienvenido</CardTitle>
+                                <CardDescription className="text-balance">
+                                    Ingresa tu usuario y contrasena
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="px-0">
+                                <form onSubmit={handleSubmit(onSubmit)}>
+                                    <FieldGroup className="gap-1">
+                                        <AppInput
+                                            label="Usuario"
+                                            errorMessage={errors.username?.message}
+                                            {...register("username")}
+                                        />
+                                        <AppInput
+                                            label="Contrasena"
+                                            errorMessage={errors.password?.message}
+                                            type={showPassword ? "text" : "password"}
+                                            rightIcon={
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowPassword((value) => !value)}
+                                                    className="text-muted-foreground hover:text-foreground"
+                                                >
+                                                    {showPassword ? (
+                                                        <EyeOff className="size-4" />
+                                                    ) : (
+                                                        <Eye className="size-4" />
+                                                    )}
+                                                </button>
+                                            }
+                                            {...register("password")}
+                                        />
+                                    </FieldGroup>
+                                    <FieldGroup className="mt-7">
+                                        <AppButton type="submit" variant="primary" size="lg" disabled={login.isPending} isLoading={login.isPending}>
+                                            {"Iniciar Sesion"}
+                                        </AppButton>
+                                    </FieldGroup>
 
-                </div>
-                <div className="flex gap-4">
-                    <AppChip icon={<FormatListBulletedAddIcon />} label="Pedido con detalles" size="small" />
-                    <AppChip icon={<TimelapseIcon />} label="Excedido de tiempo" variant="outlined" />
-                </div>
-                <div>
-                    <AppSelect
-                        label="Categoria"
-                        value={size}
-                        onChange={(value) => { console.log("Selected value:", value); setSize(value); }}
-                        options={[{ value: 1, label: "Ponche" }, { value: 2, label: "Cafe" }, { value: 3, label: "Botana" }]}
-                    />
-                    <AppSelect
-                        label="Movimiento"
-                        value={amount}
-                        onChange={(value) => { console.log("Selected value:", value); setAmount(value); }}
-                        options={[{ value: 20, label: "Deposito" }, { value: 30, label: "Compra" }, { value: 40, label: "Retiro" }]}
-                    />
-                </div>
-                <div>
-                    <LoadingState message="Cargando..." description="Por favor, espere mientras se carga la información." />
-                </div>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <AppInput
-                        label="Usuario"
-                        placeholder="Ingrese el nombre de usuario"
-                        {...register("username")}
-                    />
-                    <AppInput
-                        label="Contrasena"
-                        placeholder="Ingrese la contrasena"
-                        {...register("password")}
-                    />
-                    <AppButton type="submit" variant="primary" size="lg" disabled={login.isPending}>
-                        {login.isPending ? "Iniciando sesion..." : "Iniciar Sesion"}
-                    </AppButton>
-                </form>
+                                </form>
+                            </CardContent>
+                        </div>
+                    </div>
+                </Card>
             </div>
         </>
     );
