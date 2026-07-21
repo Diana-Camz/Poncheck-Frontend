@@ -52,7 +52,7 @@ export default function Signin() {
                 </div>
             }
             <Header/>
-            <div className="flex min-h-svh w-full items-center justify-center px-4 py-8 sm:px-6 md:p-10">
+            <div className="box-border flex min-h-svh w-full items-center justify-center px-4 py-8 pt-20 sm:px-6 md:px-10 md:pb-10">
                 <Card className="w-full max-w-5xl gap-0 overflow-hidden p-0 shadow-lg md:grid md:grid-cols-[minmax(0,1.15fr)_minmax(340px,0.85fr)]">
                     <div className="relative min-h-56 w-full bg-muted md:min-h-[520px]">
                         <Image
