@@ -1,21 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { BottleWine, ShieldCogCorner } from "lucide-react";
-import ListAlt from "@mui/icons-material/ListAlt";
-import Payments from "@mui/icons-material/Payments";
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { ThemeToggle } from "../shared/theme-toggle";
-
-const navItems = [
-    { label: "Nueva Venta", href: "/sale", icon: BottleWine },
-    { label: "Ventas", href: "/sales", icon: ListAlt },
-    { label: "Caja", href: "/cash_register", icon: PointOfSaleIcon },
-    { label: "Movimientos", href: "/transactions", icon: Payments },
-    { label: "Admin", href: "/admin", icon: ShieldCogCorner },
-];
 
 export function Navbar() {
     const date = new Date();

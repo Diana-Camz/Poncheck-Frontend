@@ -3,7 +3,7 @@ import { Category } from "@/features/products/types/products.types";
 export const categories: Category[] = [
     {
         id: "1",
-        name: "Ponches",
+        name: "Ponche",
         active: true
     },
     {
