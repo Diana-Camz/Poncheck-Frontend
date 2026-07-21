@@ -6,13 +6,15 @@ export const useUser = (id: number) => {
         queryKey: ["user", id],
         queryFn: () => getUserById(id),
     });
-
-    const currentUserQuery = useQuery({
-        queryKey: ["user"],
-        queryFn: () => getCurrentUser,
-    });
-    return{
-        userByIdQuery,
-        currentUserQuery
+    return {
+        userByIdQuery
     }
+}
+
+export function useCurrentUser() {
+    return useQuery({
+        queryKey: ["current-user"],
+        queryFn: getCurrentUser,
+        retry: false,
+    })
 }

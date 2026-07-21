@@ -1,6 +1,8 @@
+import { UserResponse } from "@/features/users/types/users.types";
+
 export type AuthState = {
-    user: LoginResponse | null,
-    setUser: (user: LoginResponse | null) => void;
+    user: UserResponse | null,
+    setUser: (user: UserResponse | null) => void;
 }
 
 export type LoginResponse = {

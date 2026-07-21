@@ -32,12 +32,8 @@ export default function Signin() {
         },
     });
 
-    async function onSubmit(data: Login) {
-        try {
-            await login.mutateAsync({ username: data.username, password: data.password });
-        } catch {
-            toast.error("Error al iniciar sesion, por favor intenta de nuevo.")
-        }
+    function onSubmit(data: Login) {
+        login.mutate({ username: data.username, password: data.password });
     }
 
     return (

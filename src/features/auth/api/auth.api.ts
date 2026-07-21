@@ -14,5 +14,10 @@ export async function logout() {
 
 export const useAuthStore = create<AuthState>(set => ({
     user: null,
-    setUser: user => set({user})
-}))
+    setUser: user => set({ user })
+}));
+
+export function clearSession() {
+    localStorage.removeItem("token");
+    useAuthStore.getState().setUser(null);
+}
