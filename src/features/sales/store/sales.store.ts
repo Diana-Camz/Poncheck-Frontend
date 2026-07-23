@@ -8,6 +8,8 @@ export const useCartStore = create<CartState>()(
         (set, get) => ({
             cart: [],
             paymentMethod: "CASH",
+            description: "",
+            setDescription: (description) => set({description}),
             setPaymentMethod: (paymentMethod) => 
                 set({
                     paymentMethod,

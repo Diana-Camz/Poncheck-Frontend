@@ -9,20 +9,18 @@ import CartItem from "./cart-item";
 import { AppButton } from '@/components/shared/app-button';
 
 type CartSummaryProps = {
-    notes: string;
-    setNotes: React.Dispatch<React.SetStateAction<string>>;
     onConfirmOrder: () => void;
 }
 
 
 export default function CartSummary({
-    notes,
-    setNotes,
     onConfirmOrder,
 }: CartSummaryProps) {
     const cart = useCartStore(state => state.cart);
     const paymentMethod = useCartStore(state => state.paymentMethod);
     const setPaymentMethod = useCartStore(state => state.setPaymentMethod);
+    const setDescription = useCartStore(state => state.setDescription);
+    const description = useCartStore(state => state.description);
     const clearCart = useCartStore(state => state.clearCart)
     const totalItems = useCartStore(selectTotalItems);
     const cartTotal = useCartStore(selectTotalPrice);
@@ -71,9 +69,9 @@ export default function CartSummary({
                             <div>
                                 <p className="mb-3 font-medium text-lg border-b">Observaciones:</p>
                                 <Textarea
-                                    value={notes}
+                                    value={description}
                                     autoFocus
-                                    onChange={(event) => setNotes(event.target.value)}
+                                    onChange={(event) => setDescription(event.target.value)}
                                     className="min-h-15 resize-none"
                                     placeholder="Agrega notas para esta venta"
                                 />
