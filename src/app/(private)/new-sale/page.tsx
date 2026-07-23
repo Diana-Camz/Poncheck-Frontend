@@ -1,51 +1,46 @@
 "use client";
 
-import { CartItem } from "@/features/sales/types/sales.types";
-import { ProductItem } from '@/features/products/types/products.types';
-import CartSummary from "../../../features/sales/components/cart-summary";
-import Products from "../../../features/sales/components/products";
+import { CreateSaleRequestDTO } from "@/features/sales/types/sales.types";
+import CartSummary from "@/features/sales/components/cart-summary";
+import Products from "@/features/sales/components/products";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useCartStore } from "@/features/sales/store/sales.store";
+import { useAuthStore } from "@/features/auth/store/auth.store";
 
 
 export default function NewSale() {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const { user } = useAuthStore();
+
   const [notes, setNotes] = useState("");
   const [productsResetKey, setProductsResetKey] = useState(0);
 
-  const addToCart = (product: ProductItem) => {
-    const price = product.price;
-    const existingItem = cart.find(item => item.id === product.id)
-    if (existingItem) {
-      setCart(cart.map(item =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      ))
-    } else {
-      setCart([...cart, { ...product, quantity: 1, price, }])
-    }
-  }
+  const clearCart = useCartStore(state => state.clearCart);
+  const cart = useCartStore(state => state.cart);
+  const paymentMethod = useCartStore(state => state.paymentMethod);
 
-  const updateQuantity = (productId: string, quantity: number) => {
-    setCart(cart.map(item => {
-      if (item.id === productId) {
-        const newQuantity = item.quantity + quantity
-        return newQuantity > 0 ? { ...item, quantity: newQuantity } : item
-      }
-      return item
-    }).filter(item => item.quantity > 0))
-  }
-
-  const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
-
-  const removeFromCart = (productId: string) => {
-    setCart(cart.filter((item) => item.id !== productId))
+  if (!user) {
+    return null;
   }
 
   const handleConfirmOrder = () => {
+    if (!user?.business?.id) {
+      toast.error("No se encontró el negocio asociado al usuario");
+      return;
+    }
+
+    const salePayload: CreateSaleRequestDTO = {
+      paymentMethod,
+      description: notes,
+      items: cart.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity
+      })),
+      businessId: user.business.id
+    }
+    console.log(JSON.stringify(salePayload, null, 2));
     toast.success("Venta realizada correctamente", { position: "top-center" });
-    setCart([]);
+    clearCart();
     setNotes("");
   }
 
@@ -53,23 +48,15 @@ export default function NewSale() {
     <div className="flex h-[calc(100vh-8rem)] flex-col gap-4 p-4 lg:h-[calc(100vh-4rem)] lg:flex-row lg:p-6">
       <div className="block w-1/2 lg:w-3/5 ">
         <Products
-          addToCart={addToCart}
-          cart={cart}
-          setCart={setCart}
           key={productsResetKey}
         />
       </div>
 
       <CartSummary
-        cart={cart}
-        cartTotal={cartTotal}
         notes={notes}
         setNotes={setNotes}
-        updateQuantity={updateQuantity}
-        removeFromCart={removeFromCart}
         onConfirmOrder={handleConfirmOrder}
       />
-
     </div>
   )
 }
