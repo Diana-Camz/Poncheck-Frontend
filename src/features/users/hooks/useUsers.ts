@@ -16,8 +16,8 @@ export function useCurrentUser() {
         queryKey: ["current-user"],
         queryFn: getCurrentUser,
         retry: false,
-        staleTime: 25 * 60 * 1000,
-        gcTime: 30 * 60 * 1000,
-        refetchOnWindowFocus: false,
+        staleTime: 0,
+        refetchOnMount: "always",
+        refetchOnWindowFocus: true,
     })
 }

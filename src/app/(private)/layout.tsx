@@ -11,6 +11,15 @@ export default function Home({ children }: { children: React.ReactNode }) {
     const { data: user, isPending, isError } = useCurrentUser();
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            clearSession();
+            router.replace("/signin");
+            return;
+        }
+
+
         if (user) {
             useAuthStore.getState().setUser(user);
         }

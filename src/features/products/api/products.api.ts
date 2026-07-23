@@ -1,7 +1,7 @@
 import { axiosClient } from "@/lib/api/axios-client";
-import { ProductItem } from "../types/products.types";
+import { Product } from "../types/products.types";
 
-export async function getProducts(): Promise<ProductItem[]> {
-    const response = await axiosClient.get<ProductItem[]>("/products/active");
+export async function getProducts(): Promise<Product[]> {
+    const response = await axiosClient.get<Product[]>("/products/active");
     return response.data;
-}
+};
