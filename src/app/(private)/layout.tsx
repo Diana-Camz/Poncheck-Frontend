@@ -1,6 +1,7 @@
 "use client"
 import { AppLayout } from "@/components/layout/app-layout";
-import { clearSession, useAuthStore } from "@/features/auth/api/auth.api";
+import { clearSession } from "@/features/auth/api/auth.api";
+import { useAuthStore } from "@/features/auth/store/auth.store";
 import { useCurrentUser } from "@/features/users/hooks/useUsers";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
