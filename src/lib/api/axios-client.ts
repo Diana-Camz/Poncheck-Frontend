@@ -1,5 +1,5 @@
 import { useAuthStore } from "@/features/auth/store/auth.store";
-import { useQueryClient } from "@tanstack/react-query";
+import { queryClient } from "@/lib/tanstack-query/react-query";
 import axios from "axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -21,7 +21,6 @@ axiosClient.interceptors.request.use((config) => {
 axiosClient.interceptors.response.use(
   response => response,
   error => {
-    const queryClient = useQueryClient();
     if (
       error?.response?.status === 401
     ) {
@@ -33,4 +32,3 @@ axiosClient.interceptors.response.use(
     return Promise.reject(error);
   }
 )
-
