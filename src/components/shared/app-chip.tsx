@@ -33,6 +33,7 @@ export default function AppChip({
             color: foregroundColor,
             border: selected ? "1px solid transparent" : "1px solid var(--border)",
             fontSize: 16,
+            fontWeight: 500,
             width: 170,
             paddingY: 2.5,
             '&:hover': {

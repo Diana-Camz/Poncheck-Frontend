@@ -1,18 +1,22 @@
 import { useMutation, useQueryClient, } from "@tanstack/react-query";
-import { login, logout, useAuthStore } from "@/features/auth/api/auth.api"
-import { Login } from "../schema/auth.schema";
+import { clearSession, login, logout } from "@/features/auth/api/auth.api"
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { useAuthStore } from "../store/auth.store";
 
 export function useLogin() {
     const router = useRouter();
     return useMutation({
-        mutationFn: async (data: Login) => {
-            const response = await login(data);
+        mutationFn: login,
+        onSuccess: (response) => {
             localStorage.setItem("token", response.jwtToken);
-            return response;
-        },
-        onSuccess: () => {
+            useAuthStore.getState().setUser(response);
             router.replace("/new-sale");
+            toast.success("Sesion iniciada corectamente");
+        },
+        onError: () => {
+            toast.error("Error al iniciar sesion, por favor intenta de nuevo.");
+            clearSession();
         }
     })
 }
@@ -23,8 +27,7 @@ export function useLogout() {
     return useMutation({
         mutationFn: logout,
         onSettled: () => {
-            localStorage.removeItem("token");
-            useAuthStore.getState().setUser(null);
+            clearSession();
             queryClient.clear();
             router.replace("/signin");
         }

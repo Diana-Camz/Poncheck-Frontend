@@ -1,31 +1,22 @@
 "use client";
 import React, { useState } from 'react'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { BottleWine, Milk, Wine, Coffee, Popcorn, Shirt, SearchX } from 'lucide-react';
-import WaterDropOutlinedIcon from '@mui/icons-material/WaterDropOutlined';
+import { Card, CardContent } from '@/components/ui/card'
+import { SearchX } from 'lucide-react';
 import AppChip from '@/components/shared/app-chip';
 import AppCard from '@/features/products/components/app-card';
-import { CartItem } from '@/features/sales/types/sales.types';
-import { ProductItem } from '@/features/products/types/products.types';
 import { useProducts } from '@/features/products/hooks/useProducts';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import { EmptyState } from '@/components/shared/empty-state';
+import { useCartStore } from '../store/sales.store';
 
-type ProductsProps = {
-    addToCart: (product: ProductItem) => void;
-    cart: CartItem[];
-    setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
-}
-
-export default function Products({
-    addToCart,
-    cart
-}: ProductsProps) {
+export default function Products() {
     const [activeCategories, setActiveCategories] = useState<string[]>([]);
     const [activePoncheBases, setActivePoncheBases] = useState<string[]>([]);
+    const [activeProductSizes, setActiveProductSizes] = useState<string[]>([]);
 
     const products = useProducts();
     const categories = useCategories();
+    const cart = useCartStore(state => state.cart);
 
     const poncheBaseOptions = Array.from(
         new Set(
@@ -34,86 +25,153 @@ export default function Products({
         )
     );
 
+    const isPoncheCategory = (category: string) => category.toUpperCase().includes("PONCHE");
+    const hasPoncheCategory = activeCategories.some(isPoncheCategory);
+    const hasProductSizeCategory = activeCategories.length > 0 && !hasPoncheCategory;
+
     const filteredProducts = products.data?.filter((product) => {
         const hasCategoryFilters = activeCategories.length > 0;
         const hasPoncheBaseFilters = activePoncheBases.length > 0;
+        const hasProductSizeFilters = activeProductSizes.length > 0;
 
-        if (!hasCategoryFilters && !hasPoncheBaseFilters) {
+        if (!hasCategoryFilters) {
             return true;
         }
         const matchesCategory =
-            hasCategoryFilters && activeCategories.includes(product.category);
+            hasCategoryFilters && activeCategories.includes(product.category.toUpperCase());
 
         const matchesPoncheBase =
-            hasPoncheBaseFilters &&
+            !hasPoncheBaseFilters ||
             product.poncheBase != null &&
             activePoncheBases.includes(product.poncheBase);
 
-        return matchesCategory || matchesPoncheBase;
+        const matchesProductSize =
+            !hasProductSizeFilters ||
+            product.productSize != null &&
+            activeProductSizes.includes(product.productSize);
+
+        if (hasPoncheCategory) {
+            return matchesCategory && matchesPoncheBase;
+        }
+
+        return matchesCategory && matchesProductSize;
     });
 
     const poncheBaseLabels = {
-        MILK: "Ponches de Leche",
-        WATER: "Ponches de Agua",
-        WINE: "Ponches de Vino",
-        MEZCAL: "Ponches de Mezcal",
+        MILK: "Leche",
+        WATER: "Agua",
+        WINE: "Vino Tinto",
+        MEZCAL: "Mezcal",
+    };
+
+    const productSizeOptions = ["SMALL", "MEDIUM", "LARGE"];
+
+    const productSizeLabels: Record<string, string> = {
+        SMALL: "Chico",
+        MEDIUM: "Mediano",
+        LARGE: "Grande",
     };
 
     const toggleCategories = (value: string) => {
-        setActiveCategories((prev) =>
-            prev.includes(value)
-                ? prev.filter((item) => item !== value)
-                : [...prev, value]
-        );
+        const normalizedValue = value.toUpperCase();
+
+        if (activeCategories.includes(normalizedValue)) {
+            setActiveCategories([]);
+            setActivePoncheBases([]);
+            setActiveProductSizes([]);
+            return;
+        }
+
+        setActiveCategories([normalizedValue]);
+        setActiveProductSizes([]);
+        setActivePoncheBases(isPoncheCategory(normalizedValue) ? ["MILK"] : []);
     };
 
     const togglePoncheBase = (value: string) => {
-        setActivePoncheBases((prev) =>
+        setActivePoncheBases([value]);
+    };
+
+    const toggleProductSize = (value: string) => {
+        setActiveProductSizes((prev) =>
             prev.includes(value)
                 ? prev.filter((item) => item !== value)
                 : [...prev, value]
         );
     };
 
-    const handleAddToCart = (item: ProductItem) => {
-        addToCart(item)
-    }
-
     return (
         <div className="w-full h-full min-h-0 flex flex-col gap-4">
-            <Card className="flex h-fit shadow-sm p-2 rounded-md overflow-visible">
-                <CardContent className=" flex flex-wrap gap-2 mx-0 px-0 items-center">
-                    {
-                        categories.data
-                            ?
-                            categories.data?.map((item) => {
-                                const isActive = activeCategories.includes(item.name.toUpperCase());
-                                return (
-                                    <AppChip
-                                        key={item.id}
-                                        label={item.name}
-                                        selected={isActive}
-                                        onClick={() => toggleCategories(item.name.toUpperCase())}
+            <Card className="flex h-fit overflow-visible rounded-md p-3 shadow-sm">
+                <CardContent className="flex w-full flex-col gap-3 px-0 py-0">
+                    <div className="flex flex-col gap-2">
+                        <p className="px-1 text-xs font-semibold uppercase text-muted-foreground">
+                            Categorías
+                        </p>
+                        <div className="flex flex-wrap items-center gap-2">
+                            {
+                                categories.data
+                                    ?
+                                    categories.data?.map((item) => {
+                                        const isActive = activeCategories.includes(item.name.toUpperCase());
+                                        return (
+                                            <AppChip
+                                                key={item.id}
+                                                label={item.name}
+                                                selected={isActive}
+                                                onClick={() => toggleCategories(item.name.toUpperCase())}
+                                            />
+                                        )
+                                    })
+                                    :
+                                    <EmptyState
+                                        title={"Sin categorias"}
+                                        description={"No se encontro ninguna categoria asociada a este negocio"}
                                     />
-                                )
-                            })
-                            :
-                        <EmptyState
-                            title={"Sin categorias"}
-                            description={"No se encontro ninguna categoria asociada a este negocio"}
-                        />
-                    }
-                    {poncheBaseOptions.map((base) => {
-                        const isActive = activePoncheBases.includes(base);
-                        return (
-                            <AppChip
-                                key={base}
-                                label={poncheBaseLabels[base]}
-                                selected={isActive}
-                                onClick={() => togglePoncheBase(base)}
-                            />
-                        )
-                    })}
+                            }
+                        </div>
+                    </div>
+                    {hasPoncheCategory && poncheBaseOptions.length > 0 && (
+                        <div className="flex flex-col gap-2 rounded-md border border-brown/20 bg-background-2 p-2">
+                            <p className="px-1 text-xs font-semibold uppercase text-brown">
+                                Base
+                            </p>
+                            <div className="flex flex-wrap items-center gap-2">
+                                {poncheBaseOptions.map((base) => {
+                                    const isActive = activePoncheBases.includes(base);
+                                    return (
+                                        <AppChip
+                                            key={base}
+                                            label={poncheBaseLabels[base]}
+                                            selected={isActive}
+                                            textColor="txDefault"
+                                            onClick={() => togglePoncheBase(base)}
+                                        />
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    )}
+                    {hasProductSizeCategory && (
+                        <div className="flex flex-col gap-2 rounded-md border border-brown/20 bg-background-2 p-2">
+                            <p className="px-1 text-xs font-semibold uppercase text-brown">
+                                Tamaños
+                            </p>
+                            <div className="flex flex-wrap items-center gap-2">
+                                {productSizeOptions.map((size) => {
+                                    const isActive = activeProductSizes.includes(size);
+                                    return (
+                                        <AppChip
+                                            key={size}
+                                            label={productSizeLabels[size]}
+                                            selected={isActive}
+                                            textColor="txDefault"
+                                            onClick={() => toggleProductSize(size)}
+                                        />
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    )}
                 </CardContent >
             </Card>
             <Card className='h-full'>
@@ -126,10 +184,9 @@ export default function Products({
                                 return (
                                     <AppCard
                                         key={item.id}
-                                        name={item.name}
+                                        product={item}
                                         imageUrl='/images/products/coffee.png'
                                         className={isInCart ? "border-2 border-brown" : ""}
-                                        onClick={() => handleAddToCart(item)}
                                     />
                                 )
                             })

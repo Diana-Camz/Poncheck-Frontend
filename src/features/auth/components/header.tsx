@@ -4,6 +4,7 @@ import Link from "next/link";
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { ThemeToggle } from "@/components/shared/theme-toggle";
+import { CalendarDays } from "lucide-react";
 
 export function Header() {
     const date = new Date();
@@ -19,7 +20,10 @@ export function Header() {
                     </Link>
                 </div>
                 <div className="lg:w-1/5 flex items-center justify-between ">
-                    <span className="lg:text-lg font-medium mr-4 lg:m-0">{formattedDate}</span>
+                    <span className="flex max-w-64 items-center gap-1.5 truncate text-sm md:text-[1rem] font-medium capitalize text-muted-foreground">
+                        <CalendarDays className="size-4 shrink-0 text-brown" />
+                        {formattedDate}
+                    </span>
                     <ThemeToggle />
                 </div>
             </div>
