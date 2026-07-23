@@ -7,13 +7,12 @@ import { LoadingState } from "@/components/shared/loading-state";
 import type { Login } from "@/features/auth/schema/auth.schema";
 import { loginSchema } from "@/features/auth/schema/auth.schema";
 import { useLogin } from "@/features/auth/hooks/useAuth";
-import { toast } from "sonner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { FieldGroup } from "@/components/ui/field";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
-import { Header } from "./components/header";
+import { Header } from "@/features/auth/components/header";
 
 export default function Signin() {
     const [showPassword, setShowPassword] = useState(false);

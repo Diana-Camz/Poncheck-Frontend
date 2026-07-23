@@ -4,11 +4,11 @@ import Link from "next/link";
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { ThemeToggle } from "../shared/theme-toggle";
-import { useAuthStore } from "@/features/auth/api/auth.api";
 import { CircleUserRound, CalendarDays, LogOutIcon, UserRound } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { useLogout } from "@/features/auth/hooks/useAuth";
+import { useAuthStore } from "@/features/auth/store/auth.store";
 
 export function Navbar() {
     const date = new Date();
@@ -40,13 +40,13 @@ export function Navbar() {
                         </div>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brown/15 text-brown">
+                                <Button className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brown/15 text-brown cursor-pointer">
                                     <UserRound className="size-5" />
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-48 p-2">
                                 <DropdownMenuGroup>
-                                    <DropdownMenuItem className="gap-2 rounded-md px-3 py-2 text-sm font-medium">
+                                    <DropdownMenuItem className="gap-2 rounded-md px-3 py-2 text-sm font-medium cursor-pointer">
                                         <CircleUserRound className="size-5 text-brown" />
                                         Perfil
                                     </DropdownMenuItem>
@@ -54,7 +54,7 @@ export function Navbar() {
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem
                                     variant="destructive"
-                                    className="gap-2 rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap"
+                                    className="gap-2 rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap cursor-pointer"
                                     onClick={() => logout.mutate()}
                                 >
                                     <LogOutIcon className="size-4" />
