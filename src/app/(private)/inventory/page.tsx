@@ -16,19 +16,19 @@ export default function Inventory() {
     <div>
       <div className="flex gap-4">
                     <ThemeToggle />
-                    <AppButton variant="primary" size="lg" onClick={() => console.log("Button clicked!")}>
+                    <AppButton variant="primary" size="lg" onClick={() => {}}>
                         Primary
                     </AppButton>
-                    <AppButton variant="secondary" onClick={() => console.log("Button clicked!")}>
+                    <AppButton variant="secondary" onClick={() => {}}>
                         Secondary
                     </AppButton>
-                    <AppButton variant="outline" onClick={() => console.log("Button clicked!")}>
+                    <AppButton variant="outline" onClick={() => {}}>
                         Outline
                     </AppButton>
-                    <AppButton variant="ghost" onClick={() => console.log("Button clicked!")}>
+                    <AppButton variant="ghost" onClick={() => {}}>
                         Ghost
                     </AppButton>
-                    <AppButton variant="destructive" onClick={() => console.log("Button clicked!")}>
+                    <AppButton variant="destructive" onClick={() => {}}>
                         Destructive
                     </AppButton>
                 </div>
@@ -48,13 +48,13 @@ export default function Inventory() {
                     <AppSelect
                         label="Categoria"
                         value={size}
-                        onChange={(value) => { console.log("Selected value:", value); setSize(value); }}
+                        onChange={(value) => { }}
                         options={[{ value: 1, label: "Ponche" }, { value: 2, label: "Cafe" }, { value: 3, label: "Botana" }]}
                     />
                     <AppSelect
                         label="Movimiento"
                         value={amount}
-                        onChange={(value) => { console.log("Selected value:", value); setAmount(value); }}
+                        onChange={(value) => {}}
                         options={[{ value: 20, label: "Deposito" }, { value: 30, label: "Compra" }, { value: 40, label: "Retiro" }]}
                     />
                 </div>
