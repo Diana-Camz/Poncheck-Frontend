@@ -15,7 +15,7 @@ export function useLogin() {
             toast.success("Sesion iniciada corectamente");
         },
         onError: () => {
-            toast.error("Error al iniciar sesion, por favor intenta de nuevo.");
+            toast.error("Error al iniciar sesion, por favor intenta de nuevo.", { position: "top-center" });
             clearSession();
         }
     })

@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { selectTotalItems, selectTotalPrice, useCartStore } from '../store/sales.store';
 import CartItem from "./cart-item";
 import { AppButton } from '@/components/shared/app-button';
+import { useCreateSale } from '../hooks/useSale';
 
 type CartSummaryProps = {
     onConfirmOrder: () => void;
@@ -17,6 +18,7 @@ export default function CartSummary({
     onConfirmOrder,
 }: CartSummaryProps) {
     const cart = useCartStore(state => state.cart);
+    const createSale = useCreateSale();
     const paymentMethod = useCartStore(state => state.paymentMethod);
     const setPaymentMethod = useCartStore(state => state.setPaymentMethod);
     const setDescription = useCartStore(state => state.setDescription);
@@ -123,8 +125,9 @@ export default function CartSummary({
                                 <Button
                                     className="w-full h-11 text-sm font-semibold xl:h-12 xl:text-[1.1rem] text-foreground  border-brown/80 bg-brown/80 hover:bg-brown/60 cursor-pointer"
                                     onClick={onConfirmOrder}
+                                    disabled={createSale.isPending || cart.length === 0}
                                 >
-                                    Confirmar Orden
+                                    {createSale.isPending ? "Procesando..." : "Confirmar Compra"}
                                 </Button>
                             </div>
                         </div>
@@ -135,11 +138,3 @@ export default function CartSummary({
         </Card>
     )
 }
-
-
-{/**
-    ${selectedPaymentMethod === "transfer"
-                                            ? "border-secondary bg-secondary/30 hover:bg-secondary/30"
-                                            : ""
-                                            }
-    */}
