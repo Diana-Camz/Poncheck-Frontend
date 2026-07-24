@@ -13,3 +13,10 @@ export type Product = {
   productSize: "SMALL" | "MEDIUM" | "LARGE" | null;
   category: string;
 }
+
+export type ProductSaleResponse = {
+         id: number,
+         name: string,
+         code: string,
+         category: string
+}

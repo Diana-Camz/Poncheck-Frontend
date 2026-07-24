@@ -7,22 +7,22 @@ import { Textarea } from '@/components/ui/textarea';
 import { selectTotalItems, selectTotalPrice, useCartStore } from '../store/sales.store';
 import CartItem from "./cart-item";
 import { AppButton } from '@/components/shared/app-button';
+import { useCreateSale } from '../hooks/useSale';
 
 type CartSummaryProps = {
-    notes: string;
-    setNotes: React.Dispatch<React.SetStateAction<string>>;
     onConfirmOrder: () => void;
 }
 
 
 export default function CartSummary({
-    notes,
-    setNotes,
     onConfirmOrder,
 }: CartSummaryProps) {
     const cart = useCartStore(state => state.cart);
+    const createSale = useCreateSale();
     const paymentMethod = useCartStore(state => state.paymentMethod);
     const setPaymentMethod = useCartStore(state => state.setPaymentMethod);
+    const setDescription = useCartStore(state => state.setDescription);
+    const description = useCartStore(state => state.description);
     const clearCart = useCartStore(state => state.clearCart)
     const totalItems = useCartStore(selectTotalItems);
     const cartTotal = useCartStore(selectTotalPrice);
@@ -71,9 +71,9 @@ export default function CartSummary({
                             <div>
                                 <p className="mb-3 font-medium text-lg border-b">Observaciones:</p>
                                 <Textarea
-                                    value={notes}
+                                    value={description}
                                     autoFocus
-                                    onChange={(event) => setNotes(event.target.value)}
+                                    onChange={(event) => setDescription(event.target.value)}
                                     className="min-h-15 resize-none"
                                     placeholder="Agrega notas para esta venta"
                                 />
@@ -125,8 +125,9 @@ export default function CartSummary({
                                 <Button
                                     className="w-full h-11 text-sm font-semibold xl:h-12 xl:text-[1.1rem] text-foreground  border-brown/80 bg-brown/80 hover:bg-brown/60 cursor-pointer"
                                     onClick={onConfirmOrder}
+                                    disabled={createSale.isPending || cart.length === 0}
                                 >
-                                    Confirmar Orden
+                                    {createSale.isPending ? "Procesando..." : "Confirmar Compra"}
                                 </Button>
                             </div>
                         </div>
@@ -137,11 +138,3 @@ export default function CartSummary({
         </Card>
     )
 }
-
-
-{/**
-    ${selectedPaymentMethod === "transfer"
-                                            ? "border-secondary bg-secondary/30 hover:bg-secondary/30"
-                                            : ""
-                                            }
-    */}

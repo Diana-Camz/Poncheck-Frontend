@@ -7,17 +7,18 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useCartStore } from "@/features/sales/store/sales.store";
 import { useAuthStore } from "@/features/auth/store/auth.store";
+import { useCreateSale } from "@/features/sales/hooks/useSale";
 
 
 export default function NewSale() {
   const { user } = useAuthStore();
 
-  const [notes, setNotes] = useState("");
   const [productsResetKey, setProductsResetKey] = useState(0);
-
-  const clearCart = useCartStore(state => state.clearCart);
   const cart = useCartStore(state => state.cart);
   const paymentMethod = useCartStore(state => state.paymentMethod);
+  const description = useCartStore(state => state.description);
+
+  const createSale = useCreateSale();
 
   if (!user) {
     return null;
@@ -31,7 +32,7 @@ export default function NewSale() {
 
     const salePayload: CreateSaleRequestDTO = {
       paymentMethod,
-      description: notes,
+      description: description,
       items: cart.map((item) => ({
         productId: item.id,
         quantity: item.quantity
@@ -39,9 +40,7 @@ export default function NewSale() {
       businessId: user.business.id
     }
     console.log(JSON.stringify(salePayload, null, 2));
-    toast.success("Venta realizada correctamente", { position: "top-center" });
-    clearCart();
-    setNotes("");
+    createSale.mutate(salePayload);
   }
 
   return (
@@ -53,8 +52,6 @@ export default function NewSale() {
       </div>
 
       <CartSummary
-        notes={notes}
-        setNotes={setNotes}
         onConfirmOrder={handleConfirmOrder}
       />
     </div>

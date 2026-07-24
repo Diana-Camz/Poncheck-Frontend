@@ -25,4 +25,10 @@ export type UserBusiness = {
     role: Role
 }
 
-export type Role = "ADMIN" | "OWNER" | "SELLER"
+export type Role = "ADMIN" | "OWNER" | "SELLER";
+
+export type UserSaleResponse = {
+    id: number,
+    name: string,
+    rol: Role
+}
