@@ -1,0 +1,63 @@
+"use client";
+import {
+    Card,
+    CardContent,
+    CardFooter,
+} from "@/components/ui/card"
+import { cn } from "@/utils/styles/utils";
+import Image from "next/image";
+import { type MouseEvent, type TouchEvent } from "react";
+import { useCartStore } from "@/features/sales/store/sales.store";
+import { Product } from "../types/products.types";
+
+type PressEvent = MouseEvent<HTMLElement> | TouchEvent<HTMLElement>;
+
+type AppCardProps = {
+    product: Product;
+    className?: string;
+    imageUrl?: string;
+    onClick?: (e: PressEvent) => void;
+};
+
+
+export default function AppCard({
+    product,
+    className,
+    imageUrl = "",
+}: AppCardProps) {
+    const isLongname = (product.name?.length ?? 0) > 15;
+    const addToCart = useCartStore(state => state.addToCart);
+
+    const handleAddToCart = (item: Product) => {
+        addToCart(item)
+    }
+
+
+    return (
+        <Card
+            className={cn("relative w-36 sm:w-40 shrink-0 surface gap-0 h-fit overflow-visible px-1 py-1 border-2 bg-background-2/60 hover:border-brown cursor-pointer transition-transform duration-150 ease-out active:scale-95 ", className)}
+            onClick={() => handleAddToCart(product)}
+        >
+            <CardContent className="relative w-full aspect-square overflow-hidden shrink-0 rounded-t-lg min-[1580px]:rounded-md cursor-pointer">
+                <Image
+                    src={imageUrl}
+                    alt={product.name}
+                    fill
+                    loading="eager"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1280px) 100vw, 240px"
+                    className="object-cover "
+                />
+            </CardContent>
+            <CardFooter className="flex h-12 min-h-12 items-center gap-0 py-2 my-1 rounded-b-md cursor-pointer leading-tight bg-brown/20">
+                <p
+                    className={cn(
+                        "w-full min-w-0 overflow-hidden text-foreground wrap-break-word text-sm text-center text-ellipsis [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]",
+                        isLongname && "text-[.820rem]"
+                    )}
+                >
+                    {product.name}
+                </p>
+            </CardFooter>
+        </Card>
+    )
+}
