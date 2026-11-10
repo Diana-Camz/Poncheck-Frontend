@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { SearchX } from 'lucide-react';
 import AppChip from '@/components/shared/app-chip';
-import AppCard from '@/features/products/components/app-card';
+import ProductSaleCard from '@/features/products/components/product-sale-card';
 import { useProducts } from '@/features/products/hooks/useProducts';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import { EmptyState } from '@/components/shared/empty-state';
@@ -182,7 +182,7 @@ export default function Products() {
                             filteredProducts.map((item) => {
                                 const isInCart = cart.some((cartItem) => cartItem.id === item.id);
                                 return (
-                                    <AppCard
+                                    <ProductSaleCard
                                         key={item.id}
                                         product={item}
                                         imageUrl='/images/products/coffee.png'
