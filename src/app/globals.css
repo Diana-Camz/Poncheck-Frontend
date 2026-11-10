@@ -63,6 +63,9 @@
   --color-cyan: var(--cyan);
   --color-green: var(--green);
   --color-red: var(--red);
+
+  --color-warning: var(--warning);
+  --color-success: var(--success);
 }
 
 :root {
@@ -114,6 +117,9 @@
   --green: #7fb494;
   --red: #f57a93;
 
+  --warning: #f3c139;
+  --success: #24c062;
+
   --chip: #1f3037;
   --chip-foreground: oklch(91.761% 0.00416 55.557 / 0.63);
   --chip-selected-background: rgba(170, 98, 16, 0.788);
@@ -155,6 +161,9 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  --warning: #f3c139;
+  --success: #119646;
 
   --brown: #ecb37a;
   --chip-selected-background: #ecb37a;
