@@ -1,27 +1,35 @@
-import { useMutation } from "@tanstack/react-query";
-import { createSale } from "../api/sales.api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createSale, getSalesByStatus } from "../api/sales.api";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { BackendError } from "@/features/types";
 import { useCartStore } from "../store/sales.store";
+import { SaleStatus } from "../types/sales.types";
 
-
+export function useSalesByStatus(status: SaleStatus) {
+    return useQuery({
+        queryKey: ["sales", "status", status],
+        queryFn: () => getSalesByStatus(status),
+    });
+}
 
 export function useCreateSale() {
+    const queryClient = useQueryClient();
     const clearCart = useCartStore(state => state.clearCart);
     const setDescription = useCartStore(state => state.setDescription);
-    const errorMessages:Record<string,string> = {
-    CASH_REGISTER_CLOSED: "La caja está cerrada",
-    INSUFFICIENT_STOCK: "No hay stock suficiente",
-    SALE_ITEMS_REQUIRED: "La venta debe tener al menos 1 producto",
-    PRODUCT_NOT_FOUND: "Producto no encontrado",
-    PRODUCT_DISABLED: "Producto deshabilitado",
-    CATEGORY_DISABLED: "Categoria Deshabilitada"
-};
+    const errorMessages: Record<string, string> = {
+        CASH_REGISTER_CLOSED: "La caja está cerrada",
+        INSUFFICIENT_STOCK: "No hay stock suficiente",
+        SALE_ITEMS_REQUIRED: "La venta debe tener al menos 1 producto",
+        PRODUCT_NOT_FOUND: "Producto no encontrado",
+        PRODUCT_DISABLED: "Producto deshabilitado",
+        CATEGORY_DISABLED: "Categoria Deshabilitada"
+    };
     return useMutation({
         mutationFn: createSale,
         onSuccess: () => {
             toast.success("Venta realizada correctamente", { position: "top-center" });
+            queryClient.invalidateQueries({ queryKey: ["sales", "status", "COMPLETED"] });
             clearCart();
             setDescription("");
         },
