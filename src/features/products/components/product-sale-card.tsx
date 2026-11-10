@@ -12,7 +12,7 @@ import { Product } from "../types/products.types";
 
 type PressEvent = MouseEvent<HTMLElement> | TouchEvent<HTMLElement>;
 
-type AppCardProps = {
+type ProductSaleCardProps = {
     product: Product;
     className?: string;
     imageUrl?: string;
@@ -20,11 +20,11 @@ type AppCardProps = {
 };
 
 
-export default function AppCard({
+export default function ProductSaleCard({
     product,
     className,
     imageUrl = "",
-}: AppCardProps) {
+}: ProductSaleCardProps) {
     const isLongname = (product.name?.length ?? 0) > 15;
     const addToCart = useCartStore(state => state.addToCart);
 

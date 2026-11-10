@@ -15,8 +15,10 @@ export type Product = {
 }
 
 export type ProductSaleResponse = {
-         id: number,
-         name: string,
-         code: string,
-         category: string
+  id: number,
+  name: string,
+  code: string,
+  category: string,
+  productSize: "SMALL" | "MEDIUM" | "LARGE" | null,
+  poncheBase: "MILK" | "WATER" | "WINE" | "MEZCAL" | null,
 }

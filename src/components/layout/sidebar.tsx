@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BottleWine, ListChecks } from "lucide-react";
+import { BottleWine, ListChecks, Box } from "lucide-react";
 import ListAlt from "@mui/icons-material/ListAlt";
 import Payments from "@mui/icons-material/Payments";
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
@@ -12,6 +12,7 @@ const navItems = [
     { label: "Nueva Venta", href: "/new-sale", icon: BottleWine },
     { label: "Ventas", href: "/sales", icon: ListAlt },
     { label: "Caja", href: "/cash-register", icon: PointOfSaleIcon },
+    { label: "Productos", href: "/products", icon: Box },
     { label: "Movimientos", href: "/", icon: Payments },
     { label: "Inventario", href: "/inventory", icon: ListChecks },
     // { label: "Admin", href: "/admin", icon: ShieldCogCorner },

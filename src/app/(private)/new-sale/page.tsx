@@ -39,7 +39,6 @@ export default function NewSale() {
       })),
       businessId: user.business.id
     }
-    console.log(JSON.stringify(salePayload, null, 2));
     createSale.mutate(salePayload);
   }
 
