@@ -14,6 +14,7 @@ export interface CartState {
 }
 
 export type PaymentMethod = "CASH" | "TRANSFER";
+export type SaleStatus = "COMPLETED" | "CANCELLED";
 
 export interface CartItem extends Product {
   quantity: number;
@@ -31,7 +32,7 @@ export type CreateSaleRequestDTO = {
   businessId: number;
 };
 
-export type CreateSaleResponse = {
+export type SaleResponse = {
   id: number,
   total: number,
   paymentMethod: PaymentMethod,

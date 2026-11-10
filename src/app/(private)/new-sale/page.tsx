@@ -39,12 +39,11 @@ export default function NewSale() {
       })),
       businessId: user.business.id
     }
-    console.log(JSON.stringify(salePayload, null, 2));
     createSale.mutate(salePayload);
   }
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] flex-col gap-4 p-4 lg:h-[calc(100vh-4rem)] lg:flex-row lg:p-6">
+    <div className="flex h-[calc(100vh-8rem)] flex-col gap-4 p-4 lg:h-[calc(100vh-4rem)] lg:flex-row lg:p-5">
       <div className="block w-1/2 lg:w-3/5 ">
         <Products
           key={productsResetKey}
