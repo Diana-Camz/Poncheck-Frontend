@@ -8,10 +8,11 @@ const methods = [
     { value: "TRANSFER", icon: Landmark, color: "bg-muted text-foreground" },
 ];
 
-export function PaymentMethodSummary({ sales, isLoading = false, isError = false }: {
+export function PaymentMethodSummary({ sales, isLoading = false, isError = false, status = "COMPLETED" }: {
     sales: SaleResponse[];
     isLoading?: boolean;
     isError?: boolean;
+    status?: "COMPLETED" | "CANCELLED";
 }) {
     return (
         <div className="grid gap-3 sm:grid-cols-3">
@@ -26,7 +27,9 @@ export function PaymentMethodSummary({ sales, isLoading = false, isError = false
                             <p className="text-sm text-muted-foreground">{salePaymentLabels[value]}</p>
                             <p className="mt-1 text-2xl font-semibold tabular-nums">{isLoading || isError ? "—" : formatSaleCurrency(total)}</p>
                             <p className="mt-1 text-xs text-muted-foreground">
-                                {isLoading ? "Cargando..." : isError ? "Sin información disponible" : `${methodSales.length} ${methodSales.length === 1 ? "venta completada" : "ventas completadas"}`}
+                                {isLoading ? "Cargando..." : isError ? "Sin información disponible" : `${methodSales.length} ${methodSales.length === 1
+                                    ? `venta ${status === "CANCELLED" ? "cancelada" : "completada"}`
+                                    : `ventas ${status === "CANCELLED" ? "canceladas" : "completadas"}`}`}
                             </p>
                         </div>
                     </div>
