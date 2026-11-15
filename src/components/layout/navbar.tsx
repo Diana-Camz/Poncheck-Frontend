@@ -33,14 +33,14 @@ export function Navbar() {
                             <span className="max-w-48 truncate text-base font-semibold text-foreground">
                                 {user?.name}
                             </span>
-                            <span className="flex max-w-64 items-center gap-1.5 truncate text-sm font-medium capitalize text-muted-foreground">
+                            <span className="flex max-w-70 items-center gap-1.5 truncate text-sm font-medium capitalize text-muted-foreground">
                                 <CalendarDays className="size-4 shrink-0 text-brown" />
                                 {formattedDate}
                             </span>
                         </div>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brown/15 text-brown cursor-pointer">
+                                <Button className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brown/15 hover:shadow-sm hover:bg-brown/15 hover:border-brown text-brown cursor-pointer">
                                     <UserRound className="size-5" />
                                 </Button>
                             </DropdownMenuTrigger>
