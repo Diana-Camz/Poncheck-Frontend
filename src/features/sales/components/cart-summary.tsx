@@ -2,7 +2,7 @@
 import React from 'react'
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, } from '@/components/ui/card'
-import { ArrowRightLeftIcon, Coins, ShoppingCart, Trash2 } from 'lucide-react';
+import { ArrowRightLeftIcon, Coins, CreditCard, ShoppingCart, Trash2 } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { selectTotalItems, selectTotalPrice, useCartStore } from '../store/sales.store';
 import CartItem from "./cart-item";
@@ -79,7 +79,7 @@ export default function CartSummary({
                                 />
                             </div>
                             <div className="flex mt-3 justify-between">
-                                <div className="mr-2 w-1/2">
+                                <div className="mr-2 w-1/3">
                                     <AppButton
                                         className={`w-full h-11 text-sm font-semibold xl:h-12 xl:text-base text-secondary-foreground border-border bg-background/50 hover:bg-background/20 hover:text-foreground cursor-pointer
                                             ${paymentMethod === "CASH"
@@ -88,7 +88,7 @@ export default function CartSummary({
                                             }
                                             `}
 
-                                        leftIcon={<Coins className="mr-2 h-5 w-5 text-brown" />}
+                                        leftIcon={<Coins className="mr-2 size-5 text-brown" />}
                                         onClick={() => {
                                             setPaymentMethod("CASH");
                                         }}
@@ -97,14 +97,32 @@ export default function CartSummary({
                                         Efectivo
                                     </AppButton>
                                 </div>
-                                <div className="ml-2 w-1/2">
+                                <div className="mr-2 w-1/3">
+                                    <AppButton
+                                        className={`w-full h-11 text-sm font-semibold xl:h-12 xl:text-base text-secondary-foreground border-border bg-background/50 hover:bg-background/20 hover:text-foreground cursor-pointer
+                                            ${paymentMethod === "CARD"
+                                                ? "border-brown bg-brown/30 hover:bg-brown/30"
+                                                : ""
+                                            }
+                                            `}
+
+                                        leftIcon={<CreditCard className="mr-2 size-5 text-brown" />}
+                                        onClick={() => {
+                                            setPaymentMethod("CARD");
+                                        }}
+                                    >
+
+                                        Tarjeta
+                                    </AppButton>
+                                </div>
+                                <div className="ml-2 w-1/3">
                                     <AppButton
                                         className={`w-full h-11 text-sm font-semibold xl:h-12 xl:text-base text-secondary-foreground border-border bg-background/50 hover:bg-background/20 hover:text-foreground cursor-pointer 
                                             ${paymentMethod === "TRANSFER"
                                                 ? "border-brown bg-brown/30 hover:bg-brown/30"
                                                 : ""
                                             }`}
-                                        leftIcon={<ArrowRightLeftIcon className="mr-2 h-5 w-5 text-brown" />}
+                                        leftIcon={<ArrowRightLeftIcon className="mr-2 size-5 text-brown" />}
                                         onClick={() => {
                                             setPaymentMethod("TRANSFER");
                                         }}

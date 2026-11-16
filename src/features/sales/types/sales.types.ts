@@ -13,7 +13,8 @@ export interface CartState {
   clearCart: () => void;
 }
 
-export type PaymentMethod = "CASH" | "TRANSFER";
+export type PaymentMethod = "CASH" | "TRANSFER" | "CARD";
+export type SaleStatus = "PENDING" | "COMPLETED" | "CANCELLED" | "REFUNDED";
 
 export interface CartItem extends Product {
   quantity: number;
@@ -31,7 +32,19 @@ export type CreateSaleRequestDTO = {
   businessId: number;
 };
 
-export type CreateSaleResponse = {
+export type CancelSaleRequestDTO = {
+  userId?: number;
+  reason: string;
+  businessId: number;
+};
+
+export type EditSaleRequestDTO = {
+  paymentMethod?: PaymentMethod;
+  description: string;
+  businessId: number;
+};
+
+export type SaleResponse = {
   id: number,
   total: number,
   paymentMethod: PaymentMethod,
